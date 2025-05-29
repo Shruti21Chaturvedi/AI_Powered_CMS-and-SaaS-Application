@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ app_setting.preloader_logo.url }}">
+    <title>{{ app_setting.app_name }}</title>
+    <!-- bootstrap Css -->
+    <link rel="stylesheet preload" href="{% static 'assets/css/plugins/fontawesome-6.css' %}" as="style">
+    <link rel="stylesheet preload" href="{% static 'assets/css/plugins/swiper.css' %}" as="style">
+    <link rel="stylesheet preload" href="{% static 'assets/css/vendor/bootstrap.min.css' %}" as="style">
+    <link rel="stylesheet preload" href="{% static 'assets/css/style.css' %}" as="style">
+    <!-- Font Awesome 6 Free CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        .single__question__answer,
+        .answer__area {            
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    {% include 'header.html' %}
+
+    <div class="dash-board-main-wrapper">
+        <div class="left-side-bar">
+            <div class="overlay-mobile-area"></div>
+            <div class="inner">
+                <div class="single-menu-wrapper">
+                    <a href="{% url 'home' %}" class="single-menu active openuptip" flow="right" tooltip="Search">
+                        <div class="icon">
+                            <img src="{% static 'assets/images/icons/01.png' %}" alt="icons">
+                        </div>
+                        <p>Home</p>
+                    </a>
+                </div>
+                <div class="single-menu-wrapper">
+                    <a href="{% url 'content_writing' %}" class="single-menu openuptip" flow="right" tooltip="Search">
+                        <div class="icon">
+                            <img src="{% static 'assets/images/icons/04.png' %}" alt="icons">
+                        </div>
+                        <p>Content Writing</p>
+                    </a>
+
+                    <a href="{% url 'report_writing' %}" class="single-menu openuptip" flow="right" tooltip="Search">
+                        <div class="icon">
+                            <img src="{% static 'assets/images/icons/07.png' %}" alt="icons">
+                        </div>
+                        <p>Report Writing</p>
+                    </a>
+                    <a href="{% url 'email_writing' %}" class="single-menu openuptip" flow="right" tooltip="Search">
+                        <div class="icon">
+                            <img src="{% static 'assets/images/icons/06.png' %}" alt="icons">
+                        </div>
+                        <p>Email Writing</p>
+                    </a>
+                </div>
+                <div class="single-menu-wrapper">
+                    <a href="login.html" class="single-menu">
+                        <div class="icon">
+                            <img src="{% static 'assets/images/icons/09.png' %}" alt="icons">
+                        </div>
+                        <p>Logout</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    {% include 'footer.html' %}
+
+
+</body>
+
+</html>

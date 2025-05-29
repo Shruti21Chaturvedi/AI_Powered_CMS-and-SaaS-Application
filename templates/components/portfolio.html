@@ -1,0 +1,115 @@
+{% load static %}
+<!-- portfolio-area start -->
+<section class="tp-portfolio-area pt-120 p-relative">
+    <div class="tp-portfolio-obj">
+        <img src="{% static 'assets/img/objects/idmg.png' %}" alt="">
+    </div>
+    <div class="container">
+        <div class="tp-portfolio-titlebox mb-50 p-relative d-lg-flex justify-content-between">
+            <h3 class="tp-section-title">IF YOU WANT TO PLANT GROW YOU? IN THE RIGHT SPOT</h3>
+            <p class="tp-section-text mt-130">Elevate your brand with <span>the Pexan</span> Agency – everything from
+                strategy to advertising & scale.</p>
+            <div class="tp-section-shape d-none d-lg-block">
+                <img src="{% static 'assets/img/shape/line-arrow.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="tp-portfolio-wrapper fix">
+            <div class="swiper-container tp-portfolio-active">
+                <div class="swiper-wrapper">
+
+
+                    {% for portfolio in portfolios %}
+                    <div class="swiper-slide">
+                        <div class="tp-portfolio-item">
+                            <div class="tp-portfolio-thumb">
+                                <a href="{{ portfolio.url }}" target="_blank">
+                                    <img src="{{ portfolio.image.url }}" alt="{{ portfolio.title }}">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tp-portfolio-controlbox mt-60">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-9 col-lg-9 col-xl-10">
+                    <span class="tp-portfolio-line"></span>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-2">
+                    <div class="tp-pagination-arrow text-center text-md-end">
+                        <button class="prev me-lg-4">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <button class="next">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- portfolio-area end -->
+
+<!-- funfact-area start -->
+<section class="tp-funfact-area pt-90 pb-80">
+    <div class="container">
+        <div class="tp-funfact-wrapp">
+            <div class="row justify-content-center">
+                <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6">
+                    <div class="tp-funfact-item gsap-magnetic">
+                        <div class="tp-funfact-box text-center">
+                            <h3 class="tp-funfact-number">
+                                <span class="purecounter" data-purecounter-duration="1"
+                                    data-purecounter-end="5">5</span>k+
+                            </h3>
+                            <h6 class="tp-funfact-title text-white">Awesome clients</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6">
+                    <div class="tp-funfact-item gsap-magnetic">
+                        <div class="tp-funfact-box text-center">
+                            <h3 class="tp-funfact-number">
+                                <span class="purecounter" data-purecounter-duration="1"
+                                    data-purecounter-end="2">2</span>b+
+                            </h3>
+                            <h6 class="tp-funfact-title text-white">Earning a year</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6">
+                    <div class="tp-funfact-item gsap-magnetic">
+                        <div class="tp-funfact-box text-center">
+                            <h3 class="tp-funfact-number">
+                                <span class="purecounter" data-purecounter-duration="1"
+                                    data-purecounter-end="47">47</span>+
+                            </h3>
+                            <h6 class="tp-funfact-title text-white">Create Projects</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6">
+                    <div class="tp-funfact-item gsap-magnetic">
+                        <div class="tp-funfact-box text-center">
+                            <h3 class="tp-funfact-number">
+                                <span class="purecounter" data-purecounter-duration="1"
+                                    data-purecounter-end="24">24</span>+
+                            </h3>
+                            <h6 class="tp-funfact-title text-white">Year of Experience</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- funfact-area end -->

@@ -1,0 +1,140 @@
+{% extends "admin/change_form.html" %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+    .regen-btn {
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+        color: white;
+        padding: 6px 12px;
+        margin-right: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .regen-btn:hover {
+        background-color: #4cae4c;
+    }
+
+    #loaderOverlay {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        text-align: center;
+        padding-top: 200px;
+        font-size: 20px;
+        color: #333;
+    }
+
+    .loader-spinner {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #5cb85c;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<div id="loaderOverlay">
+    <div class="loader-spinner"></div><br>
+    Please wait, generating blog content...
+</div>
+
+<script>
+    function callGenerateAPI() {
+        const loader = document.getElementById('loaderOverlay');
+        const messageTextarea = document.getElementById('id_title');
+        const responseTextarea = document.getElementById('id_content');
+        const prompt = messageTextarea.value.trim();
+
+        if (!prompt) {
+            alert("Please enter a message to generate a response.");
+            return;
+        }
+
+        loader.style.display = 'block'; // Show loader
+
+        // Include your website and customer data in the prompt for better context
+        const websiteData = {
+            email: 'piyushraikwar289@gmil.com',
+            phone: '8817762774',
+            address: 'Madhya Pradesh',
+            services: 'List of services you offer'
+        };
+
+        // Modify prompt to include email and information
+        const fullPrompt = `Generate a well-structured blog post of approximately 300 words based on the following prompt:
+
+                            Title: ${prompt}
+
+                            Guidelines:
+                            1. The blog should be engaging, informative, and well-organized.
+                            2. Begin with an attention-grabbing introduction.
+                            3. Include relevant subheadings (e.g., "Introduction," "Benefits," "Conclusion") to break up the content and improve readability.
+                            4. Ensure the content is SEO-friendly by incorporating relevant keywords related to the topic.
+                            5. Add a clear call-to-action at the end (e.g., “Read more,” “Subscribe for updates,” or “Learn more”).
+                            6. Use concise paragraphs and bullet points if necessary to improve readability.
+                            7. The tone should be professional yet conversational.
+
+                            Ensure the content is original and relevant to the topic.
+                            `;
+
+        fetch('http://localhost:11434/api/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "llama3.2:latest",  // Adjust model as per your API
+                prompt: fullPrompt,
+                stream: false
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                const generated = data.response || JSON.stringify(data);
+                responseTextarea.value = generated; // Set the generated response in the response field
+            })
+            .catch(error => {
+                alert("Error: " + error);
+            })
+            .finally(() => {
+                loader.style.display = 'none'; // Hide loader after the response
+            });
+    }
+</script>
+{% endblock %}
+
+{% block submit_buttons_top %}
+<div class="submit-row">
+    <button type="button" class="regen-btn" onclick="callGenerateAPI()">Regenerate blog content</button>
+    {{ block.super }}
+</div>
+{% endblock %}
+
+{% block submit_buttons_bottom %}
+<div class="submit-row">
+    <button type="button" class="regen-btn" onclick="callGenerateAPI()">Regenerate blog content</button>
+    {{ block.super }}
+</div>
+{% endblock %}

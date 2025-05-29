@@ -1,0 +1,104 @@
+{% load static %}
+<div class="main-center-content-m-left center-content search-sticky" style="overflow-y: auto;">
+    <div class="question_answer__wrapper__chatbot" id="chatWrapper" style="color: #fff; padding-bottom: 100px;">
+        <!-- Questions and answers will be injected here -->
+    </div>
+    <form id="chatForm" class="search-form">
+        <input type="text" id="userInput" placeholder="Message OLLaMA ..." required autocomplete="off">
+        <button type="submit"><i class="fa-solid fa-arrow-up"></i></button>
+    </form>
+</div>
+<div class="right-side-bar-new-chat-option">
+    <div class="right-side-open-clouse" id="collups-right">
+        <img src="{% static 'assets/images/icons/01.svg' %}" alt="icons">
+    </div>
+    <div class="single-menu-wrapper text-dark card text-center py-2" >
+        Content Writing Agent
+    </div>
+</div>
+<script>
+    const form = document.getElementById("chatForm");
+    const userInput = document.getElementById("userInput");
+    const chatWrapper = document.getElementById("chatWrapper");
+    function typeText(element, text, speed = 20) {
+        let index = 0;
+        const typing = setInterval(() => {
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index) === '\n' ? '<br>' : text.charAt(index);
+                index++;
+            } else {
+                clearInterval(typing);
+            }
+        }, speed);
+    }
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const message = userInput.value.trim();
+        if (!message) return;
+        // Append user question
+        const userHtml = `
+            <div class="single__question__answer">
+                <div class="question_user">
+                    <div class="left_user_info">
+                        <div class="question__user" style="color: #fff;">${message}</div>
+                    </div>
+                </div>
+            </div>`;
+        chatWrapper.insertAdjacentHTML("beforeend", userHtml);
+        // Clear input
+        userInput.value = "";
+        // Show loader message
+        const loaderHtml = `
+            <div class="answer__area" id="loadingAnswer">
+                <div class="thumbnail">
+                    <img src="/static/assets/images/avatar/04.png" alt="avatar">
+                </div>
+                <div class="answer_main__wrapper">
+                    <h4 class="common__title" style="color: #fff;">Loading...</h4>
+                    <p class="disc" style="color: #ccc;">Please wait while OLLaMA processes your message...</p>
+                </div>
+            </div>`;
+        chatWrapper.insertAdjacentHTML("beforeend", loaderHtml);
+        // Call LLaMA API
+        fetch('http://localhost:11434/api/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: "llama3.2:latest",
+                prompt: `
+        You are a professional content writing assistant trained to help with blog writing, SEO-friendly content, marketing copy, social media posts, and website content. Always write clearly, use proper grammar, and adapt your tone to the request. Avoid generic responses. User request: ${message}
+        `,
+                stream: false
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                const answer = data.response || "No response from model.";
+                // Remove loader
+                const loader = document.getElementById("loadingAnswer");
+                if (loader) loader.remove();
+                // Generate a unique ID for each answer
+                const uniqueId = `typedAnswer_${Date.now()}`;
+                // Append response container
+                const aiHtml = `
+        <div class="answer__area mb-2">
+            <div class="thumbnail">
+                <img src="/static/assets/images/avatar/04.png" alt="avatar">
+            </div>
+            <div class="answer_main__wrapper">
+                <h4 class="common__title" style="color: #5cb85c;">OLLaMA</h4>
+                <p class="disc" style="color: #fff;" id="${uniqueId}"></p>
+            </div>
+        </div>`;
+                chatWrapper.insertAdjacentHTML("beforeend", aiHtml);
+                // Typing effect on unique element
+                const typedEl = document.getElementById(uniqueId);
+                typeText(typedEl, answer);
+            })
+            .catch(err => {
+                alert("Error: " + err.message);
+                const loader = document.getElementById("loadingAnswer");
+                if (loader) loader.remove();
+            });
+    });
+</script>

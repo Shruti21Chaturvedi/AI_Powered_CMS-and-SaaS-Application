@@ -1,0 +1,76 @@
+{% load static %}
+<!-- tp team area start -->
+<section class="tp-skil__area fix tp-skils__inner p-relative z-index-2 pt-120 pb-120" id="team">
+    <div class="tp-skil-svg-shape">
+        <svg width="1920" height="779" viewBox="0 0 1920 779" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#filter0_f_27_375)">
+                <path class="line-1"
+                    d="M2087 308.5C1974 236.833 1691.4 145.6 1465 354C1182 614.5 1965.5 427.5 1556 207.5C1146.5 -12.5 788 331 762.5 490.5C737 650 1354.5 230 671.5 184.5C-11.5 139 381 -17.5 588 83.5C795 184.5 286.5 834 -62 543.5C-410.5 253 492 414.5 176 905"
+                    stroke="white" stroke-opacity="0.06" stroke-width="40"></path>
+            </g>
+            <defs>
+                <filter id="filter0_f_27_375" x="-193.436" y="0.173615" width="2321.15" height="945.658"
+                    filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+                    <feGaussianBlur stdDeviation="15" result="effect1_foregroundBlur_27_375"></feGaussianBlur>
+                </filter>
+            </defs>
+        </svg>
+    </div>
+    <div class="tp-skils__shape-1">
+        <img src="{% static 'assets/img/objects/2.png' %}" alt="">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="tp-team-titlebox mb-40 text-center">
+                    <span class="tp-section-subtitle mb-5"> <i class="fa-sharp fa-solid fa-minus"> </i> Trusted web
+                        design agency</span>
+                    <h3 class="tp-section-title">Meet our <span class="light-text">legends</span></h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="tp-team-area">
+                    {% for member in team_members %}
+                    <div class="tp-skils__item tp-widget__item tp-hover__reveal-item">
+                        <a>
+                            <div class="row align-items-center">
+                                <div class="col-xl-4 col-lg-4 col-md-5">
+                                    <div class="tp-skils__title-box">
+                                        <h3 class="tp-skils__title">
+                                            <span>0{{ forloop.counter }}.</span> {{ member.title }}
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6">
+                                    <div class="tp-skils__dsc">
+                                        <p>{{ member.description }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-1">
+                                    <div class="tp-skils__action text-md-end">
+                                        <span class="tp-skils__action">
+                                            <span>
+                                                <!-- <i class="fal fa-arrow-right"></i> -->
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tp-skils__mata-box">
+                                <span class="tp-skils__mata-text">{{ member.position }}</span>
+                            </div>
+                        </a>
+                        <div class="tp-hover__reveal-bg" data-background="{{ member.image.url }}"></div>
+                    </div>
+                    {% endfor %}
+                    <span class="active-bg"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- tp team area end -->

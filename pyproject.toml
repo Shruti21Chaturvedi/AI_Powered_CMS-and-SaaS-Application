@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "ai-cms"
+version = "0.1.0"
+description = ""
+authors = ["Piyush289kumar <piyushraikwar289@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django-unfold = "^0.55.3"
+pymysql = "^1.1.1"
+django = "<5"
+pillow = "^11.2.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
